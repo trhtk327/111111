@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<title>ארמית על הדרך | חגיגה ב׳–ג׳</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2e;--panel2:#18233b;--line:#2a3858;--text:#f4f6ff;--muted:#aab6d3;--gold:#f4c76b;--cyan:#6ce4df;--green:#6fe0a1;--red:#ff8585;--radius:22px;--focus:#fff0b8}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 15% 0%,#24335b 0,transparent 38%),radial-gradient(ellipse at 90% 20%,#183b49 0,transparent 28%),var(--bg);color:var(--text);font-family:Arial,"Noto Sans Hebrew",sans-serif;min-height:100vh}
+button,select,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.shell{max-width:1180px;margin:auto;padding:24px 18px 44px}
+.hero{position:relative;overflow:hidden;border:1px solid #384666;border-radius:30px;padding:30px;background:linear-gradient(120deg,rgba(29,43,74,.97),rgba(17,36,49,.94));box-shadow:0 20px 60px #0004}
+.hero:after{content:"א";position:absolute;left:30px;top:-35px;font-family:serif;font-size:220px;color:#ffffff08;pointer-events:none}
+.eyebrow{color:var(--cyan);font-size:13px;font-weight:800;letter-spacing:.08em}
+h1{font-size:clamp(32px,5vw,52px);line-height:1.1;margin:10px 0 12px}
+.hero p{max-width:720px;color:#c4cee4;line-height:1.8;margin:0}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.pill{border:1px solid #455577;border-radius:999px;padding:8px 12px;font-size:13px;color:#dfe7ff;background:#ffffff08}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+.xpbar-wrap{flex:1;min-width:220px;background:#0c1426;border:1px solid #263653;border-radius:15px;padding:12px 14px}
+.xp-line{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#c7d2e9;margin-bottom:9px}.xp-track{height:8px;border-radius:99px;background:#263653;overflow:hidden}.xp-fill{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--gold));border-radius:99px;transition:width .35s}
+.mini-stats{display:flex;gap:8px;flex-wrap:wrap}.mini-stat{padding:11px 13px;border:1px solid #354563;border-radius:13px;background:#ffffff08;font-size:13px;color:#d5def2}.mini-stat strong{color:var(--gold)}
+.section-title{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:28px 2px 14px}.section-title h2{margin:0;font-size:23px}.section-title span{color:var(--muted);font-size:13px}
+.game-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.game-card{background:linear-gradient(160deg,#18233b,#10182b);border:1px solid var(--line);border-radius:var(--radius);padding:16px;display:flex;flex-direction:column;min-height:225px;transition:transform .2s,border-color .2s,box-shadow .2s}
+.game-card:hover{transform:translateY(-3px);border-color:#5a739f}.game-card.active{border-color:var(--gold);box-shadow:0 0 0 1px #f4c76b30,0 12px 35px #0002}
+.game-icon{width:45px;height:45px;border-radius:14px;display:grid;place-items:center;font-size:23px;background:#ffffff0d;margin-bottom:12px}
+.game-card h3{margin:0 0 7px;font-size:17px}.game-card p{color:var(--muted);font-size:13px;line-height:1.65;margin:0 0 14px;flex:1}
+.select-game{background:#23314f;border:1px solid #405477;color:#fff;border-radius:12px;padding:11px;font-weight:700}.select-game:hover{background:#2c4167}
+.play-panel,.dashboard-panel{margin-top:18px;background:linear-gradient(160deg,rgba(22,32,54,.98),rgba(14,22,39,.98));border:1px solid #354563;border-radius:26px;padding:22px;box-shadow:0 18px 50px #0003}
+.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}.panel-head h2{margin:0 0 7px;font-size:25px}.panel-head p{margin:0;color:var(--muted);line-height:1.6}
+.settings{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0;padding:14px;background:#0c1426;border:1px solid #263653;border-radius:16px}
+.setting{display:flex;align-items:center;gap:9px;color:#c9d4ec;font-size:14px}.setting select{background:#1c2944;color:#fff;border:1px solid #3a4d70;border-radius:10px;padding:9px 12px;outline:none;max-width:100%}
+.status-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.stat{background:#0c1426;border:1px solid #263653;padding:10px 13px;border-radius:12px;color:#bdc9e2;font-size:14px}.stat strong{color:var(--gold);margin-right:5px}
+.stage{border-radius:20px;background:linear-gradient(135deg,#1a2945,#13263a);border:1px solid #314968;padding:22px;min-height:280px}
+.stage-kicker{color:var(--cyan);font-size:12px;font-weight:800;margin-bottom:10px}.prompt{font-size:clamp(23px,4vw,32px);font-weight:800;line-height:1.5;margin:4px 0 18px;overflow-wrap:anywhere}.subprompt{color:#bdc9e2;margin-top:-8px;margin-bottom:18px;line-height:1.7}
+.answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.answer{border:1px solid #3b5073;border-radius:14px;background:#202f4d;color:#f6f8ff;padding:14px;text-align:right;min-height:54px;line-height:1.5;transition:background .15s,border-color .15s,transform .15s}
+.answer:hover:not(:disabled){border-color:var(--cyan);background:#263b5b;transform:translateY(-1px)}.answer:disabled{cursor:default;opacity:.94}.answer.correct{border-color:var(--green);background:#174638;animation:correctPulse .45s ease}.answer.wrong{border-color:var(--red);background:#512b39;animation:wrongShake .3s ease}
+.feedback{margin-top:15px;line-height:1.7;font-weight:700;min-height:24px}.feedback.good{color:var(--green)}.feedback.bad{color:#ffaaaa}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.primary,.secondary{border:0;border-radius:13px;padding:12px 18px;font-weight:800}.primary{background:linear-gradient(110deg,#f4c76b,#ffe4a0);color:#1d2332}.primary:hover{filter:brightness(1.06)}.secondary{background:#263652;border:1px solid #405577;color:#edf3ff}.secondary:disabled{opacity:.4;cursor:not-allowed}
+.memory-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.memory-card{min-height:100px;border:1px solid #405477;border-radius:15px;background:linear-gradient(145deg,#24385b,#17243e);color:#f8faff;font-weight:800;padding:12px;line-height:1.45;display:flex;align-items:center;justify-content:center;text-align:center;overflow-wrap:anywhere}.memory-card .back{font-size:30px;color:var(--gold)}.memory-card.matched{background:#174638;border-color:#54bd8a;color:#d8ffeb;cursor:default}.memory-card.revealed{background:#314769;border-color:var(--cyan)}
+.type-row{display:flex;gap:9px;flex-wrap:wrap}.type-row input{flex:1;min-width:0;border:1px solid #465b7d;background:#0c1426;color:#fff;border-radius:13px;padding:14px;outline:none}.type-row input:focus{border-color:var(--cyan)}
+.notice{color:var(--muted);font-size:13px;line-height:1.7;margin-top:14px}.end-card{text-align:center;padding:26px 12px}.end-card .big{font-size:46px}.end-card h3{font-size:27px;margin:10px 0}.end-card p{color:var(--muted);line-height:1.7}
+.dashboard-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}.dash-card{border:1px solid #2e405f;background:#0d172a;border-radius:16px;padding:15px}.dash-card .label{color:var(--muted);font-size:12px}.dash-card .value{font-size:27px;font-weight:800;color:var(--gold);margin-top:6px}.dash-card .hint{color:#8fa0c0;font-size:12px;margin-top:4px}
+.achievements{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.achievement{border:1px solid #394b6b;border-radius:13px;background:#142039;padding:10px 12px;display:flex;align-items:center;gap:8px;font-size:13px}.achievement.locked{opacity:.45;filter:grayscale(.7)}.achievement .medal{font-size:21px}
+.review-list{display:grid;gap:8px;margin-top:12px}.review-item{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:12px;border-radius:12px;background:#111d32;border:1px solid #2c3c59}.review-item strong{display:block;margin-bottom:4px}.review-item small{color:var(--muted);line-height:1.5}
+.review-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.review-actions button{font-size:12px;padding:8px 10px}@media(max-width:560px){.review-item{align-items:flex-start;flex-direction:column}.review-actions{justify-content:flex-start;width:100%}}.flash-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}.flash-card{max-width:650px;margin:12px auto 0;min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;border-radius:22px;border:1px solid #4b6288;background:radial-gradient(circle at 50% 0%,#31496d,#17263f 70%);cursor:pointer;user-select:none}.flash-card .small{font-size:12px;color:var(--cyan);font-weight:800}.flash-card .flash-word{font-size:clamp(24px,4vw,34px);font-weight:800;line-height:1.6;margin:16px 0}.flash-card .tap{color:var(--muted);font-size:13px}
+.timer{font-size:clamp(32px,6vw,48px);font-weight:900;color:var(--gold);font-variant-numeric:tabular-nums}.timer.urgent{color:var(--red);animation:timerPulse 1s infinite}
+.toast{position:fixed;z-index:20;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#172b40;border:1px solid var(--cyan);border-radius:14px;padding:12px 18px;box-shadow:0 12px 35px #0008;transition:.25s;max-width:calc(100% - 28px);text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
+.confetti{position:fixed;z-index:10;top:-12px;width:8px;height:14px;border-radius:2px;pointer-events:none;animation:fall 1.7s ease-in forwards}
+.hidden{display:none!important}
+/* Mobile-first controls are only enabled by the narrow-screen media query. */
+.mobile-challenges-toggle,.mobile-dashboard-tabs{display:none}
+.mobile-challenges-toggle{width:100%;align-items:center;justify-content:space-between;gap:12px;padding:15px 17px;border:1px solid #526b91;border-radius:16px;background:linear-gradient(110deg,#253b60,#172941);color:var(--text);font-weight:800;font-size:17px;box-shadow:0 8px 24px #0002}
+.mobile-challenges-toggle .toggle-arrow{transition:transform .2s ease;color:var(--gold)}
+.mobile-challenges-toggle[aria-expanded="true"] .toggle-arrow{transform:rotate(180deg)}
+.mobile-dashboard-tabs{gap:8px;margin-top:16px}
+.mobile-dashboard-tabs button{flex:1;min-width:0;min-height:48px;padding:12px 10px;border-radius:13px;border:1px solid #405477;background:#17243b;color:#dce6fa;font-weight:800}
+.mobile-dashboard-tabs button[aria-selected="true"]{background:linear-gradient(110deg,#f4c76b,#ffe4a0);border-color:#ffe4a0;color:#1d2332;box-shadow:0 5px 16px #0002}
+.dashboard-subsection{min-width:0}
+@media(max-width:700px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .shell{width:100%;min-width:0}
+  .mobile-challenges-toggle{display:flex;margin-top:20px}
+  .section-title.mobile-game-heading{display:none}
+  .game-grid.mobile-games-collapsed{display:none}
+  .game-grid.mobile-games-open{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:12px;animation:mobileReveal .18s ease-out}
+  .game-card{min-width:0;overflow-wrap:anywhere}
+  .mobile-dashboard-tabs{display:flex}
+  .dashboard-panel .dashboard-subsection.mobile-section-inactive{display:none!important}
+  .dashboard-panel .panel-head{gap:12px}
+  .dashboard-panel .panel-head>div{min-width:0;flex:1}
+  .dashboard-panel .panel-head .secondary{flex-shrink:0}
+  .dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .achievements{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .achievement{min-width:0;align-items:flex-start;overflow-wrap:anywhere}
+  .achievement small{line-height:1.5}
+  .review-item{min-width:0;overflow-wrap:anywhere}
+  .review-actions button{min-height:40px}
+}
+@media(max-width:440px){
+  .game-grid.mobile-games-open{grid-template-columns:1fr}
+  .game-grid.mobile-games-open .game-card{padding:14px}
+  .mobile-dashboard-tabs button{font-size:14px;padding:11px 6px}
+  .achievements{grid-template-columns:1fr}
+  .dashboard-panel .panel-head{align-items:stretch}
+  .dashboard-panel .panel-head .secondary{align-self:flex-start;white-space:normal}
+}
+@keyframes mobileReveal{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.mobile-challenges-toggle .toggle-arrow{transition:none}}
+footer{margin-top:22px;text-align:center;color:#8795b5;font-size:12px;line-height:1.7}
+@keyframes correctPulse{0%{box-shadow:0 0 0 0 #6fe0a100}50%{box-shadow:0 0 0 5px #6fe0a133}100%{box-shadow:0 0 0 0 #6fe0a000}}
+@keyframes wrongShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+@keyframes timerPulse{50%{opacity:.65}}@keyframes fall{to{transform:translateY(110vh) rotate(500deg);opacity:.15}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+@media(max-width:1000px){.game-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.shell{padding:14px 12px 30px}.hero{padding:23px;border-radius:23px}.game-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.game-card{min-height:210px}.play-panel,.dashboard-panel{padding:15px;border-radius:21px}.stage{padding:16px}.memory-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.memory-card{min-height:88px;padding:8px;font-size:13px}}
+@media(max-width:440px){.shell{padding:10px 9px 24px}.hero{padding:19px}.game-grid{grid-template-columns:1fr}.game-card{min-height:0}.topbar{align-items:stretch}.mini-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.mini-stat{text-align:center}.settings{display:grid;grid-template-columns:1fr}.setting{justify-content:space-between;gap:8px}.setting select{max-width:58%}.answers{grid-template-columns:1fr}.memory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.memory-card{min-height:84px}.type-row{display:grid;grid-template-columns:1fr}.type-row input{width:100%}.dashboard-grid{gap:8px}.dash-card{padding:12px}.dash-card .value{font-size:23px}.panel-head h2{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="hero">
+  <div class="eyebrow">בית מדרש אינטראקטיבי · מסכת חגיגה ב׳–ג׳</div>
+  <h1>ארמית על הדרך</h1>
+  <p>לומדים את לשון הגמרא דרך משחקים קצרים, תחרותיים ומהנים. התקדמות נשמרת במכשיר, והתרגול מתאים את עצמו לביטויים שדורשים עוד חזרה.</p>
+  <div class="pills"><span class="pill">📚 20 ביטויים</span><span class="pill">🎮 5 מצבי משחק</span><span class="pill">👤 יחיד / 👥 זוגי</span><span class="pill">💾 שמירה אוטומטית</span><span class="pill">📵 ללא אינטרנט</span></div>
+</header>
+
+<div class="topbar">
+  <div class="xpbar-wrap">
+    <div class="xp-line"><span id="rankLabel">דרגה: מתחיל</span><span><strong id="xpLabel">0 XP</strong></span></div>
+    <div class="xp-track" role="progressbar" aria-label="התקדמות לדרגה הבאה; הדרגות דורשות יותר נקודות ניסיון" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="xp-fill" id="xpFill"></div></div>
+  </div>
+  <div class="mini-stats">
+    <div class="mini-stat">🏅 שיא: <strong id="highScore">0</strong></div>
+    <div class="mini-stat">🔥 רצף: <strong id="streak">0</strong></div>
+    <div class="mini-stat">📖 תורגלו: <strong id="learnedCount">0/20</strong></div>
+    <div class="mini-stat">🎖️ הישגים: <strong id="achievementCount">0</strong></div>
+  </div>
+</div>
+
+<button type="button" class="mobile-challenges-toggle" id="mobileChallengesToggle" aria-expanded="false" aria-controls="mobileGameGrid" onclick="toggleMobileChallenges()"><span id="mobileChallengesLabel">🎮 אתגרים...</span><span class="toggle-arrow" aria-hidden="true">⌄</span></button>
+<div class="section-title mobile-game-heading"><h2>בחרו אתגר</h2><span>כל המשחקים תומכים בשחקן יחיד ובשני שחקנים</span></div>
+<div class="game-grid mobile-games-collapsed" id="mobileGameGrid">
+  <article class="game-card active" data-game="quiz"><div class="game-icon">🎯</div><h3>1. מה הפירוש?</h3><p>בחרו את התרגום הנכון מבין כמה אפשרויות. תשובה נכונה מזכה בנקודות ניסיון.</p><button class="select-game" onclick="chooseGame('quiz')">משחקים עכשיו ←</button></article>
+  <article class="game-card" data-game="memory"><div class="game-icon">🧠</div><h3>2. זוגות בזיכרון</h3><p>הפכו קלפים ומצאו התאמה בין ביטוי ארמי לפירוש שלו.</p><button class="select-game" onclick="chooseGame('memory')">משחקים עכשיו ←</button></article>
+  <article class="game-card" data-game="write"><div class="game-icon">✍️</div><h3>3. אלוף התרגום</h3><p>הקלידו את הפירוש בעצמכם. בלי להסתמך רק על אפשרויות.</p><button class="select-game" onclick="chooseGame('write')">משחקים עכשיו ←</button></article>
+  <article class="game-card" data-game="race"><div class="game-icon">⏱️</div><h3>4. מרוץ 60 שניות</h3><p>כמה תשובות נכונות תצליחו לתת לפני שהזמן נגמר?</p><button class="select-game" onclick="chooseGame('race')">מתחילים מרוץ ←</button></article>
+  <article class="game-card" data-game="flash"><div class="game-icon">🗂️</div><h3>5. כרטיסיות חכמות</h3><p>חושפים פירוש, מסמנים מה כבר זכור ומחזקים את מה שעדיין קשה.</p><button class="select-game" onclick="chooseGame('flash')">לומדים בכרטיסיות ←</button></article>
+</div>
+
+<section class="play-panel" id="playPanel">
+  <div class="panel-head"><div><h2 id="gameTitle">🎯 מה הפירוש?</h2><p id="gameDesc">בחרו את התרגום הנכון וצברו נקודות.</p></div><button class="secondary" onclick="startGame()">↻ התחלה מחדש</button></div>
+  <div class="settings">
+    <label class="setting">מצב משחק <select id="mode" onchange="startGame()"><option value="single">👤 שחקן יחיד</option><option value="duo">👥 שני שחקנים</option></select></label>
+    <label class="setting">רמת קושי <select id="difficulty" onchange="startGame()"><option value="easy">🌱 קל</option><option value="hard">🔥 קשה</option></select></label>
+    <label class="setting">מספר שאלות <select id="roundLength" onchange="startGame()"><option value="10">10 שאלות</option><option value="15">15 שאלות</option><option value="20">כל המאגר</option></select></label>
+  </div>
+  <div class="status-row" id="statusRow"></div>
+  <div class="stage" id="stage" aria-live="polite"></div>
+  <div class="actions" id="actionRow"></div>
+  <div class="notice">התקדמות, שיאים וטעויות נשמרים בדפדפן במכשיר הזה בלבד. אין כאן חשבון משתמש או סנכרון בין מכשירים.</div>
+</section>
+
+<section class="dashboard-panel" id="dashboard">
+  <div class="panel-head"><div><h2>📊 מרכז ההתקדמות</h2><p>מעקב אישי שיעזור לדעת מה כבר יושב טוב ומה כדאי לתרגל שוב.</p></div><button class="secondary" onclick="startReview()">תרגול טעויות ←</button></div>
+  <div class="mobile-dashboard-tabs" role="tablist" aria-label="אזורי מרכז ההתקדמות">
+    <button type="button" id="mobileAchievementsTab" role="tab" aria-selected="true" aria-controls="mobileAchievementsSection" onclick="showMobileDashboardSection('achievements')">🏆 הישגים</button>
+    <button type="button" id="mobilePersonalTab" role="tab" aria-selected="false" aria-controls="mobilePersonalSection" onclick="showMobileDashboardSection('personal')">📊 מעקב אישי</button>
+  </div>
+  <div id="mobilePersonalSection" class="dashboard-subsection">
+    <div class="dashboard-grid">
+      <div class="dash-card"><div class="label">דיוק כולל</div><div class="value" id="accuracy">—</div><div class="hint">מתשובות שנבדקו</div></div>
+      <div class="dash-card"><div class="label">תשובות נכונות</div><div class="value" id="correctTotal">0</div><div class="hint">לאורך כל התרגולים</div></div>
+      <div class="dash-card"><div class="label">ביטויים לתרגול</div><div class="value" id="reviewCount">0</div><div class="hint">לפי טעויות ומועד חזרה</div></div>
+      <div class="dash-card"><div class="label">שיא אישי</div><div class="value" id="dashboardHigh">0</div><div class="hint">הניקוד הגבוה בסבב</div></div>
+    </div>
+    <h3 style="margin:22px 0 8px">🔁 הביטויים שכדאי לחזק</h3><div id="reviewList" class="review-list"></div>
+  </div>
+  <div id="mobileAchievementsSection" class="dashboard-subsection">
+    <h3 style="margin:22px 0 8px">🏆 הישגים</h3><div class="achievements" id="achievements"></div>
+  </div>
+</section>
+<footer>ארמית על הדרך · מסכת חגיגה ב׳–ג׳<br>גרסה עצמאית ללימוד ותרגול. פירושי הביטויים מוצגים לפי המאגר שהוגדר בקובץ.</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* מאגר מרכזי: כל המשחקים והדוחות משתמשים באותם נתונים. */
+const TERMS = [{"ar": "לְאֵתוֹיֵי מַאי", "he": "לרבות מה?"}, {"ar": "וְאִיבָּעֵית אֵימָא", "he": "ואם תרצה אמור"}, {"ar": "מֵעִיקָּרָא", "he": "מתחילה / מלכתחילה"}, {"ar": "דּוּמְיָא דְּ...", "he": "דומה ל..."}, {"ar": "אִישְׁתְּקִיל מִילּוּלֵיהּ", "he": "נשתתק / נלקח דיבורו"}, {"ar": "חַסּוֹרֵי מִיחַסְּרָא", "he": "חסרה המשנה"}, {"ar": "לָא מִשְׁתַּעֵי", "he": "אינו מדבר"}, {"ar": "בְּשִׁבָבוּתֵיהּ דְּרַבִּי", "he": "בשכנותו של רבי"}, {"ar": "וּבָעֵי רַבִּי רַחֲמֵי עֲלַיְיהוּ וְאִיתַּסּוּ", "he": "וביקש רבי רחמים עליהם והתרפאו"}, {"ar": "נָפְקָא", "he": "יוצאת / נלמדת"}, {"ar": "תַּנְיָא", "he": "שנו חכמים / ברייתא"}, {"ar": "מַאי טַעְמָא", "he": "מה הטעם?"}, {"ar": "כְּתִיב הָכָא / כְּתִיב הָתָם", "he": "כתוב כאן / כתוב שם"}, {"ar": "מַה לְּ...", "he": "מה לכך?"}, {"ar": "סָלְקָא דַּעְתָּךְ", "he": "יעלה על דעתך"}, {"ar": "קָא מַשְׁמַע לָן", "he": "בא להשמיענו"}, {"ar": "הָא קָא מַשְׁמַע לָן", "he": "זה מה שבא ללמדנו"}, {"ar": "מְנָא הָנֵי מִילֵּי", "he": "מניין דברים אלו?"}, {"ar": "הוּא הַדִּין", "he": "הדין הוא אותו דין"}, {"ar": "לָא צְרִיכָא", "he": "לא צריכא / הכוונה היא כזו"}];
+const GAME_META = {
+  quiz:{title:"🎯 מה הפירוש?",desc:"בחרו את התרגום הנכון. כל תשובה נכונה מחזקת את הזיכרון ומוסיפה XP."},
+  memory:{title:"🧠 זוגות בזיכרון",desc:"מצאו זוגות תואמים בין ביטוי ארמי לפירושו."},
+  write:{title:"✍️ אלוף התרגום",desc:"הקלידו את הפירוש בעברית. ניסוחים חלופיים מוכרים מתקבלים לפי המאגר."},
+  race:{title:"⏱️ מרוץ 10 שניות",desc:"ענו מהר על כמה שיותר שאלות שונות בתוך 10 שניות."},
+  flash:{title:"🗂️ כרטיסיות חכמות",desc:"חשפו את הפירוש וסמנו אם ידעתם או שצריך לחזור על הביטוי."}
+};
+const RANKS = [
+  {name:"מתחיל",min:0,icon:"🌱"},
+  {name:"מתרגל",min:250,icon:"📘"},
+  {name:"לומד רציני",min:700,icon:"📝"},
+  {name:"בקיא",min:1400,icon:"🧠"},
+  {name:"מומחה",min:2500,icon:"⭐"},
+  {name:"אמן הארמית",min:4200,icon:"🏅"},
+  {name:"אלוף הארמית",min:6500,icon:"🏆"}
+];
+const ACHIEVEMENTS = [
+  {id:"first",icon:"🎯",title:"צעד ראשון",desc:"ענו נכון על שאלה אחת",test:s=>s.totalCorrect>=1},
+  {id:"ten",icon:"🔟",title:"עשר הצלחות",desc:"ענו נכון על 10 שאלות",test:s=>s.totalCorrect>=10},
+  {id:"streak5",icon:"🔥",title:"רצף של חמישה",desc:"הגיעו לרצף של 5 תשובות נכונות",test:s=>s.bestStreak>=5},
+  {id:"all",icon:"📚",title:"סקרן אמיתי",desc:"תרגלו את כל הביטויים לפחות פעם אחת",test:s=>Object.keys(s.terms).length>=TERMS.length},
+  {id:"perfect",icon:"💎",title:"סבב מושלם",desc:"סיימו סבב בלי טעות",test:s=>s.perfectRounds>=1},
+  {id:"xp",icon:"✨",title:"צוברים ניסיון",desc:"צברו 250 נקודות ניסיון",test:s=>s.xp>=250},
+  {id:"flash",icon:"🗂️",title:"לומדים בכרטיסיות",desc:"סמנו 10 כרטיסיות כידעתי",test:s=>s.flashKnown>=10},
+  {id:"race",icon:"⏱️",title:"נגד השעון",desc:"ענו נכון על 8 שאלות במרוץ",test:s=>s.bestRace>=8},
+  {id:"correct25",icon:"📗",title:"מתמידים בלימוד",desc:"ענו נכון על 25 שאלות לאורך זמן",test:s=>s.totalCorrect>=25},
+  {id:"correct75",icon:"📚",title:"בקיאות מתפתחת",desc:"ענו נכון על 75 שאלות",test:s=>s.totalCorrect>=75},
+  {id:"correct150",icon:"🏆",title:"שליטה מרשימה",desc:"ענו נכון על 150 שאלות",test:s=>s.totalCorrect>=150},
+  {id:"streak10",icon:"🔥",title:"רצף עשר",desc:"הגיעו לרצף של 10 תשובות נכונות",test:s=>s.bestStreak>=10},
+  {id:"streak20",icon:"🌋",title:"ריכוז יוצא דופן",desc:"הגיעו לרצף של 20 תשובות נכונות",test:s=>s.bestStreak>=20},
+  {id:"accuracy90",icon:"🎯",title:"דיוק של מומחים",desc:"הגיעו לדיוק של 90% אחרי לפחות 30 תשובות",test:s=>s.totalAnswered>=30&&s.totalCorrect/s.totalAnswered>=0.9},
+  {id:"hard20",icon:"⚔️",title:"אתגר הקושי",desc:"ענו נכון על 20 שאלות ברמת קשה",test:s=>(s.hardCorrect||0)>=20},
+  {id:"xp1000",icon:"💠",title:"אלף נקודות ניסיון",desc:"צברו 1,000 נקודות ניסיון",test:s=>s.xp>=1000},
+  {id:"allStrong",icon:"🧩",title:"מאגר בידיים",desc:"תרגלו כל ביטוי לפחות פעמיים",test:s=>TERMS.every(t=>s.terms[t.ar]&&s.terms[t.ar].seen>=2)}
+];
+const STORAGE_KEY = "aramitAlHaderech.v2";
+const defaultState = () => ({xp:0,highScore:0,totalCorrect:0,totalAnswered:0,currentStreak:0,bestStreak:0,perfectRounds:0,flashKnown:0,bestRace:0,hardCorrect:0,terms:{},achievements:[],lastPlayed:null,sessionCount:0});
+let progress = loadProgress();
+let game = "quiz", questions = [], index = 0, scores = [0,0], turn = 0, locked = false;
+let memoryCards = [], flipped = [], matched = 0, memoryBusy = false;
+let currentTerm = null, sessionCorrect = 0, sessionAnswered = 0, sessionStartScore = 0;
+let raceTimer = null, raceEndAt = 0, raceRunning = false, raceCorrect = 0;
+let flashDeck = [], flashIndex = 0, flashRevealed = false, reviewOnly = false;
+let toastTimer = null;
+
+const $ = id => document.getElementById(id);
+const mode = () => $("mode").value;
+const difficulty = () => $("difficulty").value;
+const roundLength = () => Number($("roundLength").value);
+const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+function loadProgress(){try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");return saved&&typeof saved==="object"?{...defaultState(),...saved,terms:saved.terms||{},achievements:saved.achievements||[]}:defaultState();}catch(e){return defaultState();}}
+function saveProgress(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(progress));}catch(e){showToast("לא ניתן לשמור בדפדפן הזה. אפשר להמשיך לשחק.");}}
+function normalize(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[\u0591-\u05C7]/g,"").replace(/[.,!?״׳"'־–—/]/g," ").replace(/\s+/g," ").trim();}
+function acceptedAnswers(term){return [term.he,...(term.alts||[])];}
+function isCorrectTyped(value,term){const v=normalize(value);if(!v)return false;const accepted=acceptedAnswers(term).map(normalize);if(accepted.includes(v))return true;if(difficulty()==="easy")return accepted.some(a=>a.length>=5&&v.length>=5&&(a.includes(v)||v.includes(a)));return false;}
+function termStats(term){return progress.terms[term.ar]||(progress.terms[term.ar]={seen:0,correct:0,wrong:0,streak:0,dueAt:0,lastSeen:0,reviewCleared:false});}
+function recordAnswer(term,correct,source="game"){
+  const t=termStats(term),now=Date.now();t.seen++;t.lastSeen=now;
+  progress.totalAnswered++;sessionAnswered++;
+  if(correct){t.correct++;t.streak++;if(reviewOnly)t.reviewCleared=true;progress.totalCorrect++;sessionCorrect++;if(difficulty()==="hard")progress.hardCorrect=(progress.hardCorrect||0)+1;progress.currentStreak++;progress.bestStreak=Math.max(progress.bestStreak,progress.currentStreak);
+    const intervalDays=[0,1,3,7,14,30][Math.min(t.streak,5)];t.dueAt=now+intervalDays*86400000;
+    const earned=(difficulty()==="hard"?15:10)+(progress.currentStreak>0&&progress.currentStreak%5===0?5:0);progress.xp+=earned;scores[turn]+=earned;
+    if(source==="flash")progress.flashKnown++;
+  }else{t.wrong++;t.streak=0;t.reviewCleared=false;t.dueAt=now+10*60*1000;progress.currentStreak=0;}
+  progress.lastPlayed=now;saveProgress();updateDashboard();checkAchievements();updateHeader();
+}
+function updateHeader(){
+  const rank=[...RANKS].reverse().find(r=>progress.xp>=r.min)||RANKS[0],next=RANKS.find(r=>r.min>progress.xp);
+  $("rankLabel").textContent=`${rank.icon} דרגה: ${rank.name}`;
+  $("xpLabel").textContent=`${progress.xp} XP`;
+  const base=rank.min,top=next?next.min:rank.min+1,pct=next?Math.min(100,Math.round((progress.xp-base)/(top-base)*100)):100;
+  $("xpFill").style.width=pct+"%";$("xpFill").parentElement.setAttribute("aria-valuenow",String(pct));
+  $("highScore").textContent=progress.highScore;$("streak").textContent=progress.currentStreak;
+  $("learnedCount").textContent=`${Object.keys(progress.terms).length}/${TERMS.length}`;
+  $("achievementCount").textContent=progress.achievements.length;
+}
+function updateDashboard(){
+  const accuracy=progress.totalAnswered?Math.round(progress.totalCorrect/progress.totalAnswered*100):0;
+  $("accuracy").textContent=progress.totalAnswered?accuracy+"%":"—";$("correctTotal").textContent=progress.totalCorrect;
+  $("reviewCount").textContent=getReviewTerms().length;$("dashboardHigh").textContent=progress.highScore;
+  renderAchievements();renderReviewList();updateHeader();
+}
+function getReviewTerms(){
+  const now=Date.now();
+  return TERMS.map(term=>({term,stats:progress.terms[term.ar]}))
+    .filter(x=>x.stats&&(!x.stats.reviewCleared || (x.stats.dueAt&&x.stats.dueAt<=now))&&(x.stats.wrong>x.stats.correct/2 || (x.stats.dueAt&&x.stats.dueAt<=now)))
+    .sort((a,b)=>{const pa=(a.stats.wrong*3-a.stats.correct)+(a.stats.dueAt<=now?3:0),pb=(b.stats.wrong*3-b.stats.correct)+(b.stats.dueAt<=now?3:0);return pb-pa;})
+    .map(x=>x.term);
+}
+function checkAchievements(){
+  const newly=[];
+  ACHIEVEMENTS.forEach(a=>{if(!progress.achievements.includes(a.id)&&a.test(progress)){progress.achievements.push(a.id);newly.push(a);}});
+  if(newly.length){saveProgress();newly.forEach(a=>showToast(`הישג חדש ${a.icon} ${a.title}`));}
+  renderAchievements();updateHeader();
+}
+function renderAchievements(){
+  $("achievements").innerHTML=ACHIEVEMENTS.map(a=>{const done=progress.achievements.includes(a.id);return `<div class="achievement ${done?"":"locked"}" title="${a.desc}"><span class="medal">${done?a.icon:"🔒"}</span><span><strong>${a.title}</strong><br><small>${a.desc}</small></span></div>`;}).join("");
+}
+function renderReviewList(){
+  const list=getReviewTerms().slice(0,6);
+  $("reviewList").innerHTML=list.length?list.map(t=>{const s=termStats(t),enc=encodeURIComponent(t.ar);return `<div class="review-item"><div><strong>${t.ar}</strong><small>${t.he}<br>טעויות: ${s.wrong} · הצלחות: ${s.correct}</small></div><div class="review-actions"><button class="secondary" onclick="startReviewCards('${enc}')">🗂️ כרטיסיות</button><button class="secondary" onclick="startReview('${enc}')">✍️ אלוף התרגום</button></div></div>`;}).join(""):`<div class="notice">אין כרגע ביטויים שממתינים לחזרה לפי הנתונים שנשמרו. המשיכו לתרגל כדי לבנות תמונת ידע מדויקת.</div>`;
+}
+function showToast(message){const el=$("toast");el.textContent=message;el.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove("show"),2600);}
+function celebrate(){if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;const colors=["#f4c76b","#6ce4df","#6fe0a1","#ffffff"];for(let i=0;i<28;i++){const el=document.createElement("i");el.className="confetti";el.style.left=Math.random()*100+"vw";el.style.background=colors[i%colors.length];el.style.animationDelay=Math.random()*.45+"s";document.body.appendChild(el);setTimeout(()=>el.remove(),2300);}}
+function stopRaceTimer(){if(raceTimer){clearInterval(raceTimer);raceTimer=null;}raceRunning=false;}
+function toggleMobileChallenges(){
+  const grid=$("mobileGameGrid"),btn=$("mobileChallengesToggle"),open=btn.getAttribute("aria-expanded")!=="true";
+  btn.setAttribute("aria-expanded",String(open));
+  grid.classList.toggle("mobile-games-open",open);grid.classList.toggle("mobile-games-collapsed",!open);
+  $("mobileChallengesLabel").textContent=open?"🎮 הסתרת האתגרים":"🎮 אתגרים...";
+}
+function closeMobileChallenges(){
+  const btn=$("mobileChallengesToggle"),grid=$("mobileGameGrid");
+  if(!btn||!grid)return;
+  btn.setAttribute("aria-expanded","false");grid.classList.remove("mobile-games-open");grid.classList.add("mobile-games-collapsed");$("mobileChallengesLabel").textContent="🎮 אתגרים...";
+}
+function showMobileDashboardSection(section){
+  const achievements=section==="achievements";
+  $("mobileAchievementsSection").classList.toggle("mobile-section-inactive",!achievements);
+  $("mobilePersonalSection").classList.toggle("mobile-section-inactive",achievements);
+  $("mobileAchievementsTab").setAttribute("aria-selected",String(achievements));
+  $("mobilePersonalTab").setAttribute("aria-selected",String(!achievements));
+}
+function chooseGame(g){closeMobileChallenges();stopRaceTimer();game=g;reviewOnly=false;document.querySelectorAll(".game-card").forEach(c=>c.classList.toggle("active",c.dataset.game===g));startGame();$("playPanel").scrollIntoView({behavior:"smooth",block:"start"});}
+function updateStatus(extra=""){
+  const scoreText=mode()==="single"?`⭐ ניקוד: <strong>${scores[0]}</strong>`:`🔵 שחקן 1: <strong>${scores[0]}</strong>　🟣 שחקן 2: <strong>${scores[1]}</strong>　· תור: <strong>${turn+1}</strong>`;
+  const progressText=game==="memory"?`🧩 זוגות: <strong>${matched}/${difficulty()==="easy"?6:10}</strong>`:game==="race"?`✅ נכונות במרוץ: <strong>${raceCorrect}</strong>`:game==="flash"?`🗂️ כרטיסייה: <strong>${Math.min(flashIndex+1,flashDeck.length)}/${flashDeck.length}</strong>`:`📍 שאלה: <strong>${Math.min(index+1,questions.length)}/${questions.length}</strong>`;
+  $("statusRow").innerHTML=`<div class="stat">${scoreText}</div><div class="stat">רמה: <strong>${difficulty()==="easy"?"קל":"קשה"}</strong></div><div class="stat">${progressText}</div>${extra?`<div class="stat">${extra}</div>`:""}`;
+}
+function startGame(){
+  stopRaceTimer();scores=[0,0];turn=0;index=0;locked=false;matched=0;flipped=[];memoryBusy=false;sessionCorrect=0;sessionAnswered=0;sessionStartScore=progress.xp;raceCorrect=0;flashIndex=0;flashRevealed=false;
+  questions=shuffle(TERMS);$("gameTitle").textContent=GAME_META[game].title;$("gameDesc").textContent=GAME_META[game].desc;
+  if(game==="quiz")renderQuiz();else if(game==="memory")renderMemory();else if(game==="write")renderWrite();else if(game==="race")renderRaceIntro();else renderFlash();
+  updateDashboard();
+}
+function nextTurn(){if(mode()==="duo")turn=1-turn;}
+function endSession(message){
+  stopRaceTimer();
+  const runScore=scores.reduce((a,b)=>a+b,0);progress.highScore=Math.max(progress.highScore,runScore);if(game==="race")progress.bestRace=Math.max(progress.bestRace,raceCorrect);
+  if(sessionAnswered>0&&sessionCorrect===sessionAnswered)progress.perfectRounds++;
+  progress.sessionCount++;saveProgress();checkAchievements();updateDashboard();
+  const winner=mode()==="duo"?(scores[0]===scores[1]?"תיקו — שניכם אלופים!":scores[0]>scores[1]?"שחקן 1 ניצח!":"שחקן 2 ניצח!"):"";
+  $("stage").innerHTML=`<div class="end-card"><div class="big">${runScore>0?"🏆":"📘"}</div><h3>${message||"האתגר הושלם!"}</h3><p>${mode()==="single"?`צברת <strong>${runScore}</strong> נקודות בסבב.`:`שחקן 1: <strong>${scores[0]}</strong> · שחקן 2: <strong>${scores[1]}</strong><br><strong>${winner}</strong>`}<br>נכונות בסבב: ${sessionCorrect} מתוך ${sessionAnswered} · נוספו ${Math.max(0,progress.xp-sessionStartScore)} XP לאורך התרגול.</p><button class="primary" onclick="startGame()">לשחק שוב</button></div>`;
+  $("actionRow").innerHTML=`<button class="secondary" onclick="startReview()">תרגול טעויות ←</button><button class="secondary" onclick="scrollToDashboard()">למרכז ההתקדמות ↓</button>`;
+  updateStatus();if(runScore>0)celebrate();
+}
+function scrollToDashboard(){$("dashboard").scrollIntoView({behavior:"smooth",block:"start"});}
+function renderQuiz(){
+  if(index>=questions.length){endSession();return;}
+  locked=false;const t=questions[index],wrong=shuffle(TERMS.filter(x=>x.ar!==t.ar));
+  const options=shuffle([t,...wrong.slice(0,difficulty()==="easy"?3:5)]);
+  $("stage").innerHTML=`<div class="stage-kicker">שאלה ${index+1} מתוך ${questions.length} · ${mode()==="duo"?"תור שחקן "+(turn+1):"תרגול אישי"}</div><div class="prompt">${t.ar}</div><div class="subprompt">מה פירוש הביטוי בעברית?</div><div class="answers">${options.map((o,i)=>`<button class="answer" data-correct="${o.ar===t.ar}" onclick="answerChoice(this,${TERMS.indexOf(t)},${o.ar===t.ar},'quiz')">${o.he}</button>`).join("")}</div><div class="feedback" id="feedback"></div>`;
+  $("actionRow").innerHTML=`<button class="secondary" onclick="skipQuestion()">דלג על השאלה ↷</button>`;updateStatus();
+}
+function answerChoice(btn,termIndex,correct,source){
+  if(locked)return;locked=true;const t=TERMS[Number(termIndex)];if(!t)return;
+  document.querySelectorAll(".answer").forEach(b=>{b.disabled=true;if(b.dataset.correct==="true")b.classList.add("correct");});
+  if(!correct)btn.classList.add("wrong");
+  const f=$("feedback");f.className="feedback "+(correct?"good":"bad");
+  f.textContent=correct?`נכון מאוד! ${mode()==="duo"?"שחקן "+(turn+1)+" צובר נקודות.":"ממשיכים כך!"}`:`לא הפעם. הפירוש: ${t.he}`;
+  recordAnswer(t,correct,source);if(correct&&source==="race")raceCorrect++;
+  if(source==="race"){index++;if(mode()==="duo")nextTurn();setTimeout(()=>{if(raceRunning)renderRaceQuestion();},350);return;}
+  $("actionRow").innerHTML=`<button class="primary" onclick="advanceQuestion()">${index===questions.length-1?"סיום האתגר":"לשאלה הבאה ←"}</button>`;
+  updateStatus();
+}
+function advanceQuestion(){index++;nextTurn();if(game==="quiz")renderQuiz();else renderQuiz();}
+function skipQuestion(){if(locked)return;locked=true;const t=questions[index];$("feedback").className="feedback";$("feedback").textContent="הפירוש: "+t.he;$("actionRow").innerHTML=`<button class="primary" onclick="index++;nextTurn();renderQuiz()">המשך ←</button>`;}
+function renderMemory(){
+  const count=difficulty()==="easy"?6:10,chosen=shuffle(TERMS).slice(0,count);
+  memoryCards=shuffle(chosen.flatMap((t,i)=>[{id:i,type:"ar",text:t.ar},{id:i,type:"he",text:t.he,term:t}]));
+  flipped=[];matched=0;memoryBusy=false;
+  $("stage").innerHTML=`<div class="stage-kicker">מצאו זוגות תואמים · ${mode()==="duo"?"שחקנים מתחלפים בתורות":"שחקן יחיד"}</div><div class="subprompt">לחצו על שני קלפים. התאמה נכונה היא ביטוי ארמי והפירוש שלו.</div><div class="memory-grid">${memoryCards.map((c,i)=>`<button class="memory-card" data-i="${i}" aria-label="קלף ${i+1}, מוסתר" onclick="flipCard(${i})"><span class="back">✦</span></button>`).join("")}</div><div class="feedback" id="feedback" aria-live="polite"></div>`;
+  $("actionRow").innerHTML=`<button class="secondary" onclick="renderMemory()">ערבוב מחדש</button>`;updateStatus();
+}
+function flipCard(i){
+  if(memoryBusy||flipped.includes(i))return;const el=document.querySelector(`[data-i="${i}"]`);if(!el||el.classList.contains("matched"))return;
+  el.classList.add("revealed");el.innerHTML=memoryCards[i].text;el.setAttribute("aria-label",memoryCards[i].text);flipped.push(i);
+  if(flipped.length===2){memoryBusy=true;const [a,b]=flipped,ok=memoryCards[a].id===memoryCards[b].id&&memoryCards[a].type!==memoryCards[b].type;
+    setTimeout(()=>{const ea=document.querySelector(`[data-i="${a}"]`),eb=document.querySelector(`[data-i="${b}"]`);if(!ea||!eb)return;
+      if(ok){ea.classList.add("matched");eb.classList.add("matched");ea.classList.remove("revealed");eb.classList.remove("revealed");matched++;const t=memoryCards[a].term||memoryCards[b].term||TERMS.find(x=>x.ar===memoryCards[a].text||x.ar===memoryCards[b].text);if(t){recordAnswer(t,true,"memory");sessionCorrect++;} $("feedback").className="feedback good";$("feedback").textContent="התאמה מצוינת! נקודות ניסיון נוספו.";
+      }else{ea.classList.remove("revealed");eb.classList.remove("revealed");ea.innerHTML='<span class="back">✦</span>';eb.innerHTML='<span class="back">✦</span>';ea.setAttribute("aria-label","קלף מוסתר");eb.setAttribute("aria-label","קלף מוסתר");const arCard=memoryCards[a].type==="ar"?memoryCards[a]:memoryCards[b];const t=TERMS.find(x=>x.ar===arCard.text);if(t){const s=termStats(t);s.wrong++;s.lastSeen=Date.now();s.dueAt=Date.now()+10*60*1000;saveProgress();}if(mode()==="duo")turn=1-turn;$("feedback").className="feedback bad";$("feedback").textContent="לא זוג תואם — נסו לזכור את המיקום.";}
+      flipped=[];memoryBusy=false;updateStatus();updateDashboard();if(matched===(difficulty()==="easy"?6:10)){endSession("מצאתם את כל הזוגות!");}
+    },650);
+  }
+}
+function renderWrite(){
+  if(index>=questions.length){endSession();return;}locked=false;currentTerm=questions[index];
+  $("stage").innerHTML=`<div class="stage-kicker">אתגר ${index+1} מתוך ${questions.length} · ${mode()==="duo"?"תור שחקן "+(turn+1):"תרגול אישי"}</div><div class="prompt">${currentTerm.ar}</div><div class="subprompt">${difficulty()==="easy"?"כתבו את הפירוש בעברית.":"כתבו את הפירוש המדויק ככל האפשר."}</div><form class="type-row" onsubmit="submitWrite(event)"><input id="writeAnswer" autocomplete="off" aria-label="הקלידו פירוש בעברית" placeholder="הפירוש בעברית…" required><button class="primary" type="submit">בדיקת תשובה</button></form><div class="feedback" id="feedback" aria-live="polite"></div>`;
+  $("actionRow").innerHTML=`<button class="secondary" onclick="skipWrite()">דלג על הביטוי ↷</button>`;updateStatus();const input=$("writeAnswer");if(input&&window.innerWidth>500)input.focus();
+}
+function submitWrite(e){e.preventDefault();if(locked)return;const val=$("writeAnswer").value,correct=isCorrectTyped(val,currentTerm);locked=true;$("writeAnswer").disabled=true;document.querySelector(".type-row button").disabled=true;
+  $("feedback").className="feedback "+(correct?"good":"bad");$("feedback").textContent=correct?`נכון! הפירוש: ${currentTerm.he}`:`התשובה המקובלת: ${currentTerm.he}`;
+  recordAnswer(currentTerm,correct,"write");$("actionRow").innerHTML=`<button class="primary" onclick="index++;nextTurn();renderWrite()">${index===questions.length-1?"סיום האתגר":"לביטוי הבא ←"}</button>`;updateStatus();}
+function skipWrite(){if(locked)return;locked=true;$("feedback").className="feedback";$("feedback").textContent="הפירוש: "+currentTerm.he;const s=termStats(currentTerm);s.wrong++;s.dueAt=Date.now()+600000;saveProgress();$("actionRow").innerHTML=`<button class="primary" onclick="index++;nextTurn();renderWrite()">המשך ←</button>`;}
+function renderRaceIntro(){
+  $("stage").innerHTML=`<div class="end-card"><div class="big">⏱️</div><h3>מוכנים למרוץ?</h3><p>יש לכם 10 שניות לענות על כמה שיותר שאלות שונות.<br>${difficulty()==="easy"?"ארבע אפשרויות לכל שאלה.":"שש אפשרויות לכל שאלה."}<br>${mode()==="duo"?"אחרי כל תשובה התור עובר לשחקן הבא.":"צברו שיא אישי חדש."}</p><div class="timer" id="timerDisplay">00:10</div></div>`;
+  $("actionRow").innerHTML=`<button class="primary" onclick="beginRace()">התחלת המרוץ 🚀</button>`;updateStatus();
+}
+function beginRace(){stopRaceTimer();raceRunning=true;raceEndAt=Date.now()+10000;questions=shuffle(TERMS);index=0;renderRaceQuestion();raceTimer=setInterval(()=>{const left=Math.max(0,Math.ceil((raceEndAt-Date.now())/1000));const el=$("timerDisplay");if(el){el.textContent=`00:${String(left).padStart(2,"0")}`;el.classList.toggle("urgent",left<=10);}if(left<=0){stopRaceTimer();endSession("הזמן נגמר!");}},200);}
+function renderRaceQuestion(){
+  if(!raceRunning)return;locked=false;if(index>=questions.length){stopRaceTimer();endSession("כל הביטויים הוצגו — כל הכבוד!");return;}
+  const t=questions[index],wrong=shuffle(TERMS.filter(x=>x.ar!==t.ar)),options=shuffle([t,...wrong.slice(0,difficulty()==="easy"?3:5)]);
+  $("stage").innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><div class="stage-kicker">مرוץ נגד הזמן · ${mode()==="duo"?"תור שחקן "+(turn+1):"שחקן יחיד"}</div><div class="timer" id="timerDisplay">00:10</div></div><div class="prompt">${t.ar}</div><div class="subprompt">מה הפירוש?</div><div class="answers">${options.map(o=>`<button class="answer" data-correct="${o.ar===t.ar}" onclick="answerChoice(this,${TERMS.indexOf(t)},${o.ar===t.ar},'race')">${o.he}</button>`).join("")}</div><div class="feedback" id="feedback"></div>`;
+  $("actionRow").innerHTML=`<button class="secondary" onclick="stopRaceTimer();endSession('המרוץ הסתיים לפי בחירתכם')">סיום המרוץ</button>`;updateStatus(`⏱️ <strong>10 שניות</strong>`);
+}
+function renderFlash(){
+  const due=getReviewTerms();flashDeck=shuffle(due.length?due:TERMS).slice(0,difficulty()==="easy"?10:20);flashIndex=0;flashRevealed=false;
+  renderFlashCard();
+}
+function renderFlashCard(){
+  if(flashIndex>=flashDeck.length){endSession("סיימתם את חבילת הכרטיסיות!");return;}
+  currentTerm=flashDeck[flashIndex];flashRevealed=false;
+  $("stage").innerHTML=`<div class="stage-kicker">כרטיסייה ${flashIndex+1} מתוך ${flashDeck.length} · ${mode()==="duo"?"תור שחקן "+(turn+1):"לימוד אישי"}</div><div class="flash-card" id="flashCard" role="button" tabindex="0" aria-label="חשיפת הפירוש" onclick="revealFlash()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();revealFlash();}"><div class="small" id="flashLabel">ביטוי בארמית</div><div class="flash-word" id="flashWord">${currentTerm.ar}</div><div class="tap" id="flashTap">לחצו כדי לחשוף את הפירוש</div></div><div class="feedback" id="feedback" aria-live="polite"></div>`;
+  $("actionRow").innerHTML=`<div class="flash-controls"><button class="secondary" onclick="rateFlash(false)" id="flashAgain" disabled>↻ צריך לתרגל</button><button class="primary" onclick="rateFlash(true)" id="flashKnown" disabled>✓ ידעתי</button></div>`;updateStatus();
+}
+function revealFlash(){if(flashRevealed)return;flashRevealed=true;$("flashLabel").textContent="הפירוש בעברית";$("flashWord").textContent=currentTerm.he;$("flashTap").textContent="כעת סמנו אם ידעתם את הפירוש";$("flashAgain").disabled=false;$("flashKnown").disabled=false;}
+function rateFlash(known){if(!flashRevealed)return;recordAnswer(currentTerm,known,"flash");$("feedback").className="feedback "+(known?"good":"bad");$("feedback").textContent=known?"נרשם: ידעתם את הפירוש.":"נרשם לתרגול חוזר — הכרטיסייה תחזור בתרגול עתידי.";if(mode()==="duo")nextTurn();flashIndex++;$("actionRow").innerHTML=`<button class="primary" onclick="renderFlashCard()">${flashIndex>=flashDeck.length?"סיום הכרטיסיות":"לכרטיסייה הבאה ←"}</button>`;updateStatus();}
+function startReviewCards(encodedTerm){
+  closeMobileChallenges();showMobileDashboardSection("personal");stopRaceTimer();game="flash";reviewOnly=true;document.querySelectorAll(".game-card").forEach(c=>c.classList.toggle("active",c.dataset.game==="flash"));
+  const wanted=encodedTerm?decodeURIComponent(encodedTerm):null;
+  const due=getReviewTerms();flashDeck=wanted?TERMS.filter(t=>t.ar===wanted):due.length?shuffle(due):shuffle(TERMS).slice(0,10);
+  if(!flashDeck.length){showToast("אין ביטויים לתרגול כרגע.");return;}
+  scores=[0,0];turn=0;flashIndex=0;flashRevealed=false;sessionCorrect=0;sessionAnswered=0;sessionStartScore=progress.xp;
+  $("gameTitle").textContent="🗂️ כרטיסיות לתרגול ממוקד";$("gameDesc").textContent="הצליחו לזכור את הפירוש, והביטוי יוסר מרשימת השיפור עד למועד החזרה הבא.";
+  renderFlashCard();$("playPanel").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function startReview(encodedTerm){
+  closeMobileChallenges();showMobileDashboardSection("personal");stopRaceTimer();game="write";reviewOnly=true;document.querySelectorAll(".game-card").forEach(c=>c.classList.toggle("active",c.dataset.game==="write"));
+  const wanted=encodedTerm?decodeURIComponent(encodedTerm):null;const due=getReviewTerms();questions=wanted?TERMS.filter(t=>t.ar===wanted):due.length?due:shuffle(TERMS).slice(0,10);
+  if(!questions.length){showToast("אין ביטויים ברשימת החזרה כרגע.");return;}
+  scores=[0,0];turn=0;index=0;locked=false;sessionCorrect=0;sessionAnswered=0;sessionStartScore=progress.xp;
+  $("gameTitle").textContent="🔁 תרגול ממוקד";$("gameDesc").textContent="סבב מותאם לביטויים שטעיתם בהם או שהגיע זמן החזרה עליהם.";renderWrite();$("playPanel").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function init(){showMobileDashboardSection("achievements");updateHeader();updateDashboard();startGame();}
+init();
+</script>
+</body>
+</html>
